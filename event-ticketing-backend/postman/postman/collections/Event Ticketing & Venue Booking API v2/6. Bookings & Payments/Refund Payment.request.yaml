@@ -1,0 +1,8 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/payments/6/refund
+method: POST
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTE0ODMzMTMsImV4cCI6MTc5MTQ4NjkxM30.T3DBRxd-8KNRhi-YgvH-hZDUnEpHZu-xS2LMDZ381Rc
+order: 7000

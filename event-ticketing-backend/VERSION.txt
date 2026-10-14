@@ -1,0 +1,4 @@
+Version 2.0.0
+Final shared backend design
+Roles: admin, organiser, customer
+Tables: users, venues, venue_unavailability, event_categories, events, bookings, payments, notifications

@@ -1,0 +1,1 @@
+Apple Music Black & Rose with preserved translucent Liquid Glass. All JavaScript, API, QR and HTML retained. Back up frontend-emil; extract ZIP into C:\xampp\htdocs\Web-API-Project\; replace frontend files; Ctrl+F5. Theme selector remains available. XAMPP live backend not tested.

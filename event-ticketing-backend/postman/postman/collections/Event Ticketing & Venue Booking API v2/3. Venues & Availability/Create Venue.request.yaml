@@ -1,0 +1,20 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/venues
+method: POST
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Innovation Hall",
+      "address": "Kuala Lumpur, Malaysia",
+      "capacity": 300,
+      "description": "A medium-sized venue for seminars, workshops and technology events."
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImVtYWlsIjoib3JnYW5pc2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJvcmdhbmlzZXIiLCJpYXQiOjE3OTE0NzgxMzAsImV4cCI6MTc5MTQ4MTczMH0.DzToJoanESzUdvvjsBSgyEazeI4_49NSLaa5zW8kkc4
+order: 3000

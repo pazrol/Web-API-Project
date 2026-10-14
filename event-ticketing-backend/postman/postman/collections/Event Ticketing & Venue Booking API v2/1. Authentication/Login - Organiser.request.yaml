@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/auth/login
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "organiser1@example.com",
+      "password": "password123"
+    }
+order: 2000

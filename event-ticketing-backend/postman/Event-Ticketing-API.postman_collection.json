@@ -1,0 +1,1385 @@
+{
+  "info": {
+    "name": "Event Ticketing & Venue Booking API - Login & Register",
+    "_postman_id": "3f6497f0-7508-443a-a2c8-c0f6808e34d9",
+    "description": "Updated Postman collection using one Login request and one Register request. Login reads the role returned by the backend and automatically saves the JWT plus user ID, email, and role. Registration accepts a role field (customer, organiser, or admin); the fixed Admin reference key must be validated server-side. Before use, configure base_url and the local X-API-Key. Never publish real secrets or JWTs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost/Web-API-Project/event-ticketing-backend/api",
+      "description": "Local API base URL. Change if your XAMPP folder path is different."
+    },
+    {
+      "key": "token",
+      "value": "",
+      "description": "Filled automatically after the Login request succeeds."
+    },
+    {
+      "key": "api_key",
+      "value": "CHANGE_THIS_API_KEY"
+    },
+    {
+      "key": "user_id",
+      "value": "999999"
+    },
+    {
+      "key": "venue_id",
+      "value": "999999"
+    },
+    {
+      "key": "unavailability_id",
+      "value": "999999"
+    },
+    {
+      "key": "category_id",
+      "value": "999999"
+    },
+    {
+      "key": "event_id",
+      "value": "6"
+    },
+    {
+      "key": "created_event_id",
+      "value": "0"
+    },
+    {
+      "key": "booking_id",
+      "value": "6"
+    },
+    {
+      "key": "qr_booking_id",
+      "value": "1"
+    },
+    {
+      "key": "payment_id",
+      "value": "6"
+    },
+    {
+      "key": "notification_id",
+      "value": "9"
+    },
+    {
+      "key": "recipient_id",
+      "value": "4"
+    },
+    {
+      "key": "organiser_id",
+      "value": "2"
+    },
+    {
+      "key": "login_email",
+      "value": "customer1@example.com",
+      "description": "Email address used by the single Login request."
+    },
+    {
+      "key": "login_password",
+      "value": "password123",
+      "description": "Password used by the single Login request. Replace with the credentials for the account to test."
+    },
+    {
+      "key": "current_role",
+      "value": "",
+      "description": "Filled automatically by Login using data.user.role."
+    },
+    {
+      "key": "current_user_id",
+      "value": "",
+      "description": "Filled automatically by Login using data.user.id."
+    },
+    {
+      "key": "current_email",
+      "value": "",
+      "description": "Filled automatically by Login using data.user.email."
+    },
+    {
+      "key": "signup_role",
+      "value": "customer",
+      "description": "Choose customer, organiser, or admin for Register."
+    },
+    {
+      "key": "signup_reference_key",
+      "value": "",
+      "description": "Leave blank for customer. Enter the configured server-side key for privileged roles if required."
+    },
+    {
+      "key": "registered_user_id",
+      "value": "",
+      "description": "Filled automatically by Register when successful."
+    },
+    {
+      "key": "registered_email",
+      "value": "",
+      "description": "Filled automatically by Register when successful."
+    },
+    {
+      "key": "registered_role",
+      "value": "",
+      "description": "Filled automatically by Register when successful."
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Health & Root",
+      "item": [
+        {
+          "name": "API Root",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/"
+            },
+            "description": "Returns API name, version, roles and available resource endpoints."
+          }
+        },
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health"
+            },
+            "description": "Checks whether the API and database connection are available."
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login"
+            },
+            "description": "Use this single request for every role. Change login_email and login_password to any account. The response includes data.user.role; the test script detects it and saves current_role/current_user_id/current_email and the JWT token automatically.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{login_email}}\",\n  \"password\": \"{{login_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let body = {};",
+                  "try { body = pm.response.json(); } catch (e) {}",
+                  "pm.test(\"Login returns HTTP 200\", function () { pm.response.to.have.status(200); });",
+                  "if (body && body.success && body.data && body.data.token && body.data.user) {",
+                  "  pm.collectionVariables.set(\"token\", body.data.token);",
+                  "  pm.collectionVariables.set(\"current_role\", String(body.data.user.role || \"\"));",
+                  "  pm.collectionVariables.set(\"current_user_id\", String(body.data.user.id || \"\"));",
+                  "  pm.collectionVariables.set(\"current_email\", String(body.data.user.email || \"\"));",
+                  "  console.log(\"Login successful. Detected role: \" + body.data.user.role + \". JWT saved to {{token}}.\");",
+                  "} else {",
+                  "  console.log(\"Login failed. Check email/password and API response.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/register"
+            },
+            "description": "Creates an account through the registration endpoint. Default is customer. Set signup_role to customer, organiser, or admin. For Admin registration, set signup_reference_key to the fixed key configured in the backend; the server must validate it. Registration does not return a JWT, so run Login after successful registration.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Signup Test\",\n  \"email\": \"postman.signup.{{$timestamp}}@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"{{signup_role}}\",\n  \"reference_key\": \"{{signup_reference_key}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let body = {};",
+                  "try { body = pm.response.json(); } catch (e) {}",
+                  "pm.test(\"Register returns HTTP 201\", function () { pm.response.to.have.status(201); });",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"registered_user_id\", String(body.data.id));",
+                  "  pm.collectionVariables.set(\"registered_email\", String(body.data.email || \"\"));",
+                  "  pm.collectionVariables.set(\"registered_role\", String(body.data.role || \"\"));",
+                  "  console.log(\"Registration successful. Created role: \" + body.data.role + \". Run Login using this email to receive a JWT.\");",
+                  "} else {",
+                  "  console.log(\"Registration failed. Check required fields, duplicate email, role, reference key, and API response.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Users - Admin",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?page=1&per_page=10"
+            },
+            "description": "List users with pagination. Use an Admin JWT."
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}"
+            },
+            "description": "Get one user by ID. Create a test user first or set user_id to an existing test user."
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo Customer\",\n  \"email\": \"demo.customer.{{$timestamp}}@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"customer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users"
+            },
+            "description": "Creates a demo customer; the response ID is saved to {{user_id}} for Get/Update/Delete User."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"user_id\", String(body.data.id));",
+                  "  console.log(\"Saved user_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Demo Customer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}"
+            },
+            "description": "Updates a test user. Use an Admin JWT and target a disposable user."
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}"
+            },
+            "description": "Deletes the selected user if permitted. Only target a disposable test user; user_id starts as 999999 for safety."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Venues & Unavailability",
+      "item": [
+        {
+          "name": "List Venues",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/venues?search=Hall&page=1&per_page=10"
+            },
+            "description": "Lists venues matching the search term, with pagination."
+          }
+        },
+        {
+          "name": "Create Venue",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Demo Venue {{$timestamp}}\",\n  \"address\": \"Kuala Lumpur, Malaysia\",\n  \"capacity\": 250,\n  \"description\": \"Temporary venue created to test venue CRUD.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/venues"
+            },
+            "description": "Creates a temporary venue and automatically saves its ID to {{venue_id}}. Use this test venue for Update/Delete Venue."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"venue_id\", String(body.data.id));",
+                  "  console.log(\"Saved venue_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Venue Unavailability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/venues/{{venue_id}}/unavailability"
+            },
+            "description": "Lists unavailability slots for the selected venue. Set venue_id to a real venue ID."
+          }
+        },
+        {
+          "name": "Update Venue",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{base_url}}/venues/{{venue_id}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Demo Venue Updated\",\n  \"address\": \"Kuala Lumpur, Malaysia\",\n  \"capacity\": 300,\n  \"description\": \"Updated temporary venue used for API testing.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Updates the venue created by Create Venue. Check foreign-key/event dependencies before deleting venues."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Unavailability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"venue_id\": {{venue_id}},\n  \"unavailability_date\": \"2026-11-10\",\n  \"start_time\": \"09:00:00\",\n  \"end_time\": \"17:00:00\",\n  \"status\": \"available\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/unavailability"
+            },
+            "description": "Creates a venue unavailability slot. Run Create Venue first or set venue_id to a valid venue ID."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"unavailability_id\", String(body.data.id));",
+                  "  console.log(\"Saved unavailability_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Unavailability",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unavailability_date\": \"2026-11-10\",\n  \"start_time\": \"10:00:00\",\n  \"end_time\": \"18:00:00\",\n  \"status\": \"available\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/unavailability/{{unavailability_id}}"
+            },
+            "description": "Updates the slot created by Create Unavailability. Its ID is saved to {{unavailability_id}}."
+          }
+        },
+        {
+          "name": "Delete Unavailability",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{base_url}}/unavailability/{{unavailability_id}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Deletes the selected unavailability slot; unavailability_id is saved by Create Unavailability."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Venue",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{base_url}}/venues/{{venue_id}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Deletes the selected venue if no related records prevent deletion. Only use a disposable test venue."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Categories",
+      "item": [
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories"
+            },
+            "description": "Lists event categories."
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_name\": \"Postman Demo Category {{$timestamp}}\",\n  \"description\": \"Temporary category created to test category CRUD.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/categories"
+            },
+            "description": "Creates a category and saves its ID to {{category_id}} for Update/Delete Category."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"category_id\", String(body.data.id));",
+                  "  console.log(\"Saved category_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{base_url}}/categories/{{category_id}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_name\": \"Postman Demo Category Updated\",\n  \"description\": \"Updated temporary category used for API testing.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Updates the category created by Create Category."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{base_url}}/categories/{{category_id}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Deletes the selected category if it is not referenced by events. Use a disposable test category."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Events",
+      "item": [
+        {
+          "name": "List Events - Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events?search=Cyber&page=1&per_page=10"
+            },
+            "description": "Searches event records by the search term and paginates the results."
+          }
+        },
+        {
+          "name": "List Events - Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events?category_id=1"
+            },
+            "description": "Filters events by category ID. Change category_id in the URL to test another category."
+          }
+        },
+        {
+          "name": "Get Event",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events/{{event_id}}"
+            },
+            "description": "Gets one event by ID. event_id defaults to test event 6 in the supplied database."
+          }
+        },
+        {
+          "name": "Create Event - Organiser",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Postman Organiser Event {{$timestamp}}\",\n  \"description\": \"Event created from the shared Postman collection.\",\n  \"category_id\": 4,\n  \"venue_id\": 3,\n  \"start_datetime\": \"2026-10-23 10:00:00\",\n  \"end_datetime\": \"2026-10-23 13:00:00\",\n  \"ticket_price\": 25,\n  \"total_tickets\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/events"
+            },
+            "description": "Use the Login request with an Organiser account first. An organiser should create an event under their own account. This sample uses venue 3 and a future time slot."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"created_event_id\", String(body.data.id));",
+                  "  console.log(\"Saved created_event_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"New Demo Event - Updated\",\n  \"description\": \"Event updated from the shared Postman collection.\",\n  \"category_id\": 4,\n  \"venue_id\": 1,\n  \"start_datetime\": \"2026-10-20 14:00:00\",\n  \"end_datetime\": \"2026-10-20 17:00:00\",\n  \"ticket_price\": 30,\n  \"total_tickets\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/events/{{event_id}}"
+            },
+            "description": "Updates the demo event. Review its current values and booking history before changing dates, venue or ticket quantity."
+          }
+        },
+        {
+          "name": "Delete Event",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events/{{event_id}}"
+            },
+            "description": "Permanently deletes the selected event if the backend allows it. This matches the DELETE /api/events/7 operation tested earlier. Do not target an event with bookings."
+          }
+        },
+        {
+          "name": "List Events",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/events?page=1&per_page=10"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Lists events with pagination."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Event - Admin",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{base_url}}/events"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Postman Admin Event {{$timestamp}}\",\n  \"description\": \"Event created from the shared Postman collection.\",\n  \"category_id\": 4,\n  \"venue_id\": 3,\n  \"start_datetime\": \"2026-10-23 14:00:00\",\n  \"end_datetime\": \"2026-10-23 16:00:00\",\n  \"ticket_price\": 25,\n  \"total_tickets\": 100,\n  \"organiser_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Use the Login request with an Admin account first. Admin creation must include organiser_id; this example assigns the event to organiser ID 2."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"created_event_id\", String(body.data.id));",
+                  "  console.log(\"Saved created_event_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6. Bookings & Payments",
+      "item": [
+        {
+          "name": "List My Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bookings?page=1&per_page=10"
+            },
+            "description": "Customers see their own bookings; Admin/Organiser visibility follows backend permissions."
+          }
+        },
+        {
+          "name": "Create Booking - Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": 2,\n  \"quantity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/bookings"
+            },
+            "description": "Use the Login request with a Customer account first. Creates a pending booking for 2 tickets for event 2; on success, saves its ID to {{booking_id}}."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"booking_id\", String(body.data.id));",
+                  "  console.log(\"Saved booking_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Pay Booking - Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"booking_id\": {{booking_id}},\n  \"payment_method\": \"e_wallet\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/payments"
+            },
+            "description": "Use the Login request with a Customer account and run Create Booking first. The backend calculates the payment amount from the booking."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"payment_id\", String(body.data.id));",
+                  "  console.log(\"Saved payment_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "View Payment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/{{payment_id}}"
+            },
+            "description": "Alias kept to match the request name in your screenshots; uses the same tested GET /payments/{id} endpoint as Get Payment."
+          }
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bookings/{{booking_id}}"
+            },
+            "description": "Cancels a booking while preserving its history. Use the owning Customer JWT and a booking that is eligible for cancellation."
+          }
+        },
+        {
+          "name": "Get Booking",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/bookings/{{booking_id}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Gets one booking including its status and associated payment information. Create Booking updates booking_id automatically."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/payments/{{payment_id}}"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Retrieves one payment by ID. The payment ID is saved automatically after Pay Booking."
+          },
+          "response": []
+        },
+        {
+          "name": "Refund Payment",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{base_url}}/payments/{{payment_id}}/refund"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Admin operation. Log in as Admin first. The payment must be in refund_pending state; payment_id is updated after a successful payment."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Notifications",
+      "item": [
+        {
+          "name": "List Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications?page=1&per_page=10"
+            },
+            "description": "Lists notifications available to the authenticated user."
+          }
+        },
+        {
+          "name": "Send Notification to Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipient_id\": 4,\n  \"event_id\": 2,\n  \"title\": \"Event Reminder\",\n  \"message\": \"Technology Talk Session will be held on 21 October 2026 from 10:00 AM to 1:00 PM.\",\n  \"notification_type\": \"event_reminder\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/notifications"
+            },
+            "description": "Use Admin or the relevant Organiser JWT. The sender ID is derived by the backend; this request saves the created ID to {{notification_id}}."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (body && body.success && body.data && body.data.id !== undefined) {",
+                  "  pm.collectionVariables.set(\"notification_id\", String(body.data.id));",
+                  "  console.log(\"Saved notification_id = \" + body.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Broadcast Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"System Announcement\",\n  \"message\": \"New events are now available.\",\n  \"notification_type\": \"general\",\n  \"broadcast\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/notifications"
+            },
+            "description": "Use an authorised Admin/Organiser account; the backend decides which recipients can be notified."
+          }
+        },
+        {
+          "name": "Mark Notification Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/notifications/{{notification_id}}/read"
+            },
+            "description": "Use the recipient’s JWT. notification_id is saved by Send Notification to Customer; the notification must belong to the logged-in recipient."
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. External QR API",
+      "item": [
+        {
+          "name": "Generate Booking QR",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bookings/{{qr_booking_id}}/qr"
+            },
+            "description": "Requires a valid Bearer JWT and X-API-Key header. Set {{api_key}} to the local backend key. qr_booking_id defaults to confirmed booking 1 from the provided sample data; external QR service used by this backend is QRServer."
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Error Tests",
+      "item": [
+        {
+          "name": "Missing JWT",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events"
+            },
+            "description": "Expected 401 when the backend requires JWT authentication."
+          }
+        },
+        {
+          "name": "Invalid Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"wrong@example.com\",\n  \"password\": \"wrongpassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login"
+            },
+            "description": "Expected authentication failure for invalid credentials."
+          }
+        },
+        {
+          "name": "Customer Tries User List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users"
+            },
+            "description": "Log in as Customer first. Expected 403 if the customer does not have permission to list users."
+          }
+        },
+        {
+          "name": "QR - Missing API Key",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/bookings/{{qr_booking_id}}/qr"
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "description": "Deliberately omits X-API-Key. Expected 401 for missing API key; this is a negative test."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

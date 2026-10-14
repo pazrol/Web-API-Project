@@ -1,0 +1,940 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+:root {
+  --bg: #0a0a0c;
+  --panel: #141417;
+  --panel-light: #1c1c21;
+  --row: #18181c;
+  --border: #2a2a30;
+  --text: #f5f5f7;
+  --text-dim: #9a9aa3;
+
+  --grad: linear-gradient(135deg, #5eead4 0%, #60a5fa 50%, #a78bfa 100%);
+  --accent: #60a5fa;
+  --accent-2: #a78bfa;
+  --accent-3: #5eead4;
+
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --danger: #f87171;
+
+  --surface-light: #f4f5f7;
+  --surface-light-dim: #eceef1;
+  --surface-light-text: #111113;
+  --surface-light-sub: #6b6b74;
+
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+
+/* ---- Background layer ----
+   Dark field with a soft teal/blue/violet flare — same palette
+   family as v1.js's animated effect so both layers read as one
+   system whether or not the external effect script loads. */
+#bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 560px at 88% -8%, rgba(96,165,250,0.22), transparent 60%),
+    radial-gradient(760px 540px at -8% 18%, rgba(94,234,212,0.13), transparent 55%),
+    radial-gradient(960px 640px at 50% 112%, rgba(167,139,250,0.15), transparent 60%),
+    var(--bg);
+}
+
+/* =========================================================
+   Brand / logo mark — a small dot + wordmark, used in the
+   corner of the login page and in the dashboard top nav.
+   ========================================================= */
+.logo-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--grad);
+  display: inline-block;
+  box-shadow: 0 0 12px rgba(96,165,250,0.6);
+}
+
+.logo-text {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.logo-text em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.corner-logo {
+  position: fixed;
+  top: 24px;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+/* =========================================================
+   Top navigation bar (dashboard)
+   ========================================================= */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 28px;
+  background: rgba(10,10,12,0.75);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topnav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.navlinks {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.navlinks .navlink {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 0;
+  position: relative;
+}
+
+.navlinks .navlink.active {
+  color: var(--text);
+}
+
+.navlinks .navlink.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -17px;
+  height: 2px;
+  background: var(--grad);
+}
+
+.topnav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.topnav-name {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.role-badge {
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  color: var(--accent);
+}
+
+/* =========================================================
+   Notification bell + floating dropdown (lives in the top
+   nav; never navigates to a separate page/tab)
+   ========================================================= */
+.notif-wrap { position: relative; }
+
+.notif-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 340px;
+  max-height: 420px;
+  overflow-y: auto;
+  background: var(--surface-light);
+  color: var(--surface-light-text);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  padding: 8px 0;
+  display: none;
+  z-index: 60;
+}
+
+.notif-dropdown.open { display: block; }
+
+.notif-dropdown .notif-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 8px;
+  border-bottom: 1px solid var(--surface-light-dim);
+}
+
+.notif-dropdown .notif-head h3 { font-size: 14px; }
+.notif-dropdown .notif-head button {
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.notif-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--surface-light-dim);
+  cursor: default;
+}
+
+.notif-item:last-child { border-bottom: none; }
+
+.notif-item .notif-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.notif-item.read .notif-dot { background: transparent; }
+
+.notif-item .notif-body { flex: 1; min-width: 0; }
+.notif-item .notif-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.notif-item .notif-msg { font-size: 12.5px; color: var(--surface-light-sub); line-height: 1.4; }
+.notif-item .notif-time { font-size: 10.5px; color: var(--surface-light-sub); margin-top: 4px; }
+.notif-item .notif-mark {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.notif-empty { padding: 28px 16px; text-align: center; font-size: 13px; color: var(--surface-light-sub); }
+
+.notif-compose {
+  margin: 8px 16px 4px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--surface-light-dim);
+}
+.notif-compose button {
+  width: 100%;
+  background: var(--surface-light-text);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.app-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 28px 70px;
+}
+
+/* =========================================================
+   Auth page
+   ========================================================= */
+.auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(20, 20, 23, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-3);
+}
+
+.auth-card h1 {
+  margin: 0 0 24px;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin: 16px 0 6px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--panel-light);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
+}
+
+button { cursor: pointer; font-family: inherit; }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--text);
+  color: #0a0a0c;
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.btn:hover { filter: brightness(0.92); }
+.btn:active { transform: scale(0.98); }
+.btn.secondary { background: var(--panel-light); border: 1px solid var(--border); color: var(--text); }
+.btn.danger { background: transparent; border: 1px solid rgba(248,113,113,0.4); color: var(--danger); }
+.btn.small { padding: 6px 12px; font-size: 12px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-full { width: 100%; margin-top: 24px; }
+
+/* Pill CTA — the filled rounded "Register" style button from the
+   reference nav bar. */
+.pill-cta {
+  background: #fff;
+  color: #0a0a0c;
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-weight: 700;
+  font-size: 13px;
+  border: none;
+}
+.pill-cta:hover { filter: brightness(0.94); }
+
+.demo-accounts {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.demo-accounts strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.demo-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+.demo-table td { padding: 3px 0; font-size: 12px; }
+.demo-table td:first-child { color: var(--text-dim); width: 90px; }
+.demo-table td:last-child { color: var(--text); font-family: monospace; }
+
+.error-msg {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  font-size: 13px;
+  display: none;
+}
+
+/* =========================================================
+   Day/quick-filter bar — the row of date cards in the
+   reference (Pre-event / Day 1 / Day 2 / Day 3), repurposed
+   here as quick event filters (All / Today / This Week / …).
+   ========================================================= */
+.daybar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 22px;
+}
+
+.day-card {
+  flex: 0 0 150px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.day-card:hover { border-color: rgba(96,165,250,0.4); }
+
+.day-card .day-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.day-card .day-value {
+  font-size: 19px;
+  font-weight: 800;
+  margin: 6px 0 2px;
+}
+
+.day-card .day-sub { font-size: 11px; color: var(--text-dim); }
+
+.day-card.active {
+  background: var(--surface-light);
+  border-color: var(--surface-light);
+}
+
+.day-card.active .day-label,
+.day-card.active .day-sub { color: var(--surface-light-sub); }
+
+.day-card.active .day-value { color: var(--surface-light-text); }
+
+/* =========================================================
+   Filter chip row — pill buttons with a coloured dot,
+   used for event categories.
+   ========================================================= */
+.filterbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  align-items: center;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text-dim);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.chip .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chip.active {
+  background: var(--text);
+  color: #0a0a0c;
+  border-color: var(--text);
+}
+
+.chip-search {
+  margin-left: auto;
+  width: auto;
+  min-width: 200px;
+}
+
+/* =========================================================
+   Two-column layout: agenda list + sidebar card
+   ========================================================= */
+.layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .layout-2col { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   Agenda-style row list (replaces plain grid cards for the
+   main Events view, matching the reference's session rows)
+   ========================================================= */
+.agenda-list { display: flex; flex-direction: column; gap: 0; }
+
+/* Stable three-column layout: IDs never push event details sideways. */
+.agenda-row {
+  display: grid;
+  grid-template-columns: minmax(190px, 225px) minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 20px;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+
+.agenda-time {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-align: left;
+}
+
+.agenda-body { min-width: 0; text-align: left; }
+.agenda-body .tag-row { justify-content: flex-start; }
+.agenda-title, .agenda-meta { overflow-wrap: anywhere; }
+
+.tag-row { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.tag-pill .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+.tag-pill.highlight {
+  background: rgba(96,165,250,0.12);
+  border-color: rgba(96,165,250,0.3);
+  color: var(--accent);
+}
+
+.agenda-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.agenda-meta { font-size: 13px; color: var(--text-dim); }
+.agenda-meta .price {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+.icon-btn {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--panel-light);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.icon-btn:hover { border-color: var(--accent); }
+.icon-btn.active { background: var(--grad); color: #fff; border-color: transparent; }
+.icon-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: max-content; }
+
+@media (max-width: 760px) {
+  .agenda-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; row-gap: 8px; }
+  .agenda-time { grid-column: 1 / -1; font-size: 12px; }
+  .agenda-body { grid-column: 1; grid-row: 2; }
+  .row-actions { grid-column: 2; grid-row: 2; flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .agenda-row { grid-template-columns: minmax(0, 1fr); }
+  .agenda-time, .agenda-body, .row-actions { grid-column: 1; grid-row: auto; }
+  .row-actions { justify-content: flex-start; }
+}
+
+/* =========================================================
+   List rows — same row anatomy as .agenda-row (avatar/icon
+   column, body with tag + title + meta, actions on the right)
+   reused for Users / Venues / Categories admin pages so the
+   whole app reads as one system instead of a settings table.
+   ========================================================= */
+.row-avatar {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: #0a0a0c;
+}
+
+/* =========================================================
+   Sidebar card — the light "elevated" surface, used for
+   the My Bookings summary panel (matches the reference's
+   "My agenda" card).
+   ========================================================= */
+.sidebar-card {
+  position: sticky;
+  top: 96px;
+  background: var(--surface-light);
+  color: var(--surface-light-text);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.sidebar-card .sidebar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sidebar-card .sidebar-head h3 {
+  font-size: 17px;
+  color: var(--surface-light-text);
+}
+
+.sidebar-card .sidebar-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--surface-light-sub);
+}
+
+.sidebar-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--surface-light-dim);
+}
+
+.sidebar-item:last-of-type { border-bottom: none; }
+
+.sidebar-item .si-when {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--surface-light-sub);
+  flex: 0 0 64px;
+}
+
+.sidebar-item .si-what {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  flex: 1;
+}
+
+.sidebar-actions { display: flex; gap: 8px; margin-top: 16px; }
+.sidebar-actions .btn { flex: 1; text-align: center; font-size: 12.5px; padding: 9px; }
+.sidebar-actions .btn.secondary { background: var(--surface-light-dim); border: none; color: var(--surface-light-text); }
+.sidebar-actions .btn:not(.secondary) { background: var(--surface-light-text); color: #fff; }
+
+.sidebar-empty { font-size: 13px; color: var(--surface-light-sub); padding: 6px 0 2px; }
+
+/* =========================================================
+   Generic panels, grids and cards (admin CRUD tables, forms)
+   ========================================================= */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.panel h2 { font-size: 17px; margin-bottom: 18px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  transition: border-color 0.15s ease;
+}
+
+.card:hover { border-color: rgba(96,165,250,0.4); }
+.card h3 { margin: 0 0 6px; font-size: 15px; font-weight: 700; }
+.card p { margin: 4px 0; font-size: 13px; color: var(--text-dim); }
+.card .price {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+  font-size: 16px;
+}
+.card .actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border); }
+th { color: var(--text-dim); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-confirmed, .status-paid, .status-upcoming { background: rgba(74,222,128,0.14); color: var(--ok); }
+.status-pending, .status-refund_pending { background: rgba(251,191,36,0.14); color: var(--warn); }
+.status-cancelled, .status-failed { background: rgba(248,113,113,0.14); color: var(--danger); }
+
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+.toolbar input, .toolbar select { width: auto; min-width: 160px; }
+
+.empty-state { color: var(--text-dim); font-size: 13px; padding: 24px 0; text-align: center; }
+
+/* =========================================================
+   Modal (create/edit forms) — uses the light elevated surface
+   ========================================================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface-light);
+  color: var(--surface-light-text);
+  border-radius: var(--radius);
+  padding: 24px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.modal h3 { margin-top: 0; color: var(--surface-light-text); }
+.modal label { color: var(--surface-light-sub); }
+.modal input, .modal select, .modal textarea {
+  background: #fff;
+  border: 1px solid #e2e2e6;
+  color: var(--surface-light-text);
+}
+.modal .btn { background: var(--surface-light-text); color: #fff; }
+.modal-close { float: right; background: none; border: none; color: #8a8a92; font-size: 20px; line-height: 1; }
+
+@media (max-width: 700px) {
+  .topnav { padding: 14px 18px; gap: 16px; }
+  .navlinks { order: 3; width: 100%; gap: 14px; }
+  .app-shell { padding: 20px 16px; }
+  .corner-logo { position: static; padding: 20px 20px 0; }
+}
+
+/* =========================================================
+   Admin list pages (Users / Venues / Categories) — built on
+   the same agenda-row anatomy as Events, so every record list
+   in the app shares one visual language: a left-hand label,
+   a row of tag pills, a title + meta line, and round icon
+   buttons on the right. No tables, no card grids here.
+   ========================================================= */
+.record-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.record-avatar {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: #0a0a0c;
+}
+
+.record-body { flex: 1; min-width: 0; }
+.record-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.record-sub { font-size: 13px; color: var(--text-dim); }
+.record-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.page-head h2 { font-size: 20px; }
+
+/* =========================================================
+   Full-screen "page" overlay — used for the notification
+   compose screen. Covers the whole dashboard with its own
+   header and back button, like a route change would.
+   ========================================================= */
+.fullpage {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: var(--bg);
+  display: none;
+  overflow-y: auto;
+}
+
+.fullpage.open { display: block; }
+
+.fullpage-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+.fullpage-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 28px;
+}
+
+.fullpage-back:hover { color: var(--text); }
+
+.fullpage-inner h1 { font-size: 26px; margin-bottom: 8px; }
+.fullpage-inner p.sub { color: var(--text-dim); font-size: 14px; margin-bottom: 28px; }
+
+.recipient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.recipient-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--panel-light);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.recipient-option:hover { border-color: rgba(96,165,250,0.4); }
+
+.recipient-option.selected {
+  border-color: var(--accent);
+  background: rgba(96,165,250,0.1);
+}
+
+.recipient-option .ro-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--grad);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #0a0a0c;
+}
+
+.recipient-option .ro-name { font-weight: 600; }
+.recipient-option .ro-role { font-size: 11px; color: var(--text-dim); text-transform: capitalize; }
+
+.recipient-option.all-option {
+  grid-column: 1 / -1;
+  background: var(--panel);
+  font-weight: 700;
+}

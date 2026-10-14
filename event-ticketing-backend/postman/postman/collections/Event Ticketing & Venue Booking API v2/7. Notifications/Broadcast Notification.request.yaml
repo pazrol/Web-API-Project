@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{base_url}}.notifications"
+method: POST
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "System Announcement",
+      "message": "New events are now available.",
+      "notification_type": "general",
+      "broadcast": true
+    }
+order: 3000

@@ -1,0 +1,3 @@
+EvenTix update: Administrators no longer see the Create New button on Events & Tickets and cannot open the create-event modal via the frontend. Organisers retain event creation. Administrator event edit/delete remain unchanged. The Appearance selector and theme.js have been removed from every page; Apple Music Black & Rose is permanently selected. Liquid Glass styling and backend requests are preserved.
+
+INSTALL: Back up frontend-emil, extract into C:\xampp\htdocs\Web-API-Project\, replace frontend files, Ctrl+F5. Backend/database unchanged. Note: hiding a frontend action does not revoke server-side API permissions; backend must enforce restrictions if required.

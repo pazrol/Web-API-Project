@@ -1,0 +1,24 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/events/1
+method: PUT
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Cyber Security Seminar 2026 - Updated",
+      "description": "An updated seminar covering cybersecurity awareness and current security threats.",
+      "category_id": 4,
+      "venue_id": 1,
+      "start_datetime": "2026-10-20 09:00:00",
+      "end_datetime": "2026-10-20 13:00:00",
+      "ticket_price": 20,
+      "total_tickets": 300
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImVtYWlsIjoib3JnYW5pc2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJvcmdhbmlzZXIiLCJpYXQiOjE3OTE0ODIxOTMsImV4cCI6MTc5MTQ4NTc5M30.NHFSZT2SIeU01AXJ92WWf0i7ccZt1-Cxq84UTTBkem4
+order: 5000

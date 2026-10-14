@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--ink:#20231f;--muted:#818781;--lime:#c9f46a;--dark:#20241f;--line:#e8ebe5;--bg:#f5f6f2}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:#475f1b;text-decoration:none;font-weight:700}.app-layout{display:grid;grid-template-columns:258px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;background:#20241f;color:#f7f8f3;padding:31px 17px 22px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:12px;color:#fff;font-family:Manrope,sans-serif;font-size:24px;letter-spacing:-1.4px;font-weight:800;padding:0 14px 37px}.brand-icon{background:var(--lime);color:#1c2318;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:24px}.brand-dot{color:#b8eb5c}.brand-icon .brand-dot{color:#4a5a28}.sidebar-caption{font-size:10px;letter-spacing:2px;color:#879087;font-weight:800;padding:0 17px;margin:0 0 14px}.admin-nav{display:flex;flex-direction:column;gap:5px}.pill{display:flex;align-items:center;gap:14px;text-align:left;width:100%;background:transparent;color:#adb5ac;border:0;border-radius:11px;padding:13px 15px;font-size:13px;font-weight:650;transition:.2s}.pill:hover{background:#333b31;color:white}.pill.active{background:var(--lime);color:#232c19;font-weight:800}.nav-icon{font-size:18px;width:22px;text-align:center;font-weight:500}.sidebar-bottom{margin-top:auto;display:flex;align-items:center;gap:12px;padding:18px 12px 5px;border-top:1px solid #3b433a;font-size:13px}.sidebar-bottom small{display:block;color:#929c91;margin-top:4px}.sidebar-avatar{width:37px;height:37px;display:grid;place-items:center;background:#414b3e;border-radius:50%;color:var(--lime);font-weight:800}.dashboard-container{padding:35px clamp(20px,3.2vw,54px);min-width:0;max-width:1700px;width:100%;margin:0 auto}.admin-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 0 30px;border-bottom:1px solid var(--line)}.admin-header h1{font-family:Manrope,sans-serif;font-size:clamp(25px,2.8vw,37px);letter-spacing:-1.4px;margin:10px 0 5px}.admin-header p{color:var(--muted);margin:0;font-size:13px}.eyebrow{font-size:10px;letter-spacing:2px;color:#889085;font-weight:800;text-transform:uppercase}.logout-button,.tiny-button{border:1px solid #dfe3da;background:#fff;color:#333d31;border-radius:10px;padding:11px 17px;font-size:12px;font-weight:800}.logout-button:hover,.tiny-button:hover{background:#eaf0e1}.section-title{margin:33px 0 23px}.section-title h2{font-family:Manrope,sans-serif;font-size:clamp(24px,2.4vw,31px);letter-spacing:-1px;margin:8px 0}.section-title p:not(.eyebrow){font-size:13px;color:#858b84;margin:0}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}.stat{background:white;border:1px solid var(--line);border-radius:17px;padding:23px 22px;min-height:155px;font-size:12px;font-weight:700;color:#747d73;box-shadow:0 8px 30px #2b342806}.stat:before{content:'↗';display:block;text-align:right;color:#899780;font-size:20px}.stat strong{display:block;font-family:Manrope,sans-serif;font-size:39px;color:#20271e;margin-top:13px;letter-spacing:-2px}.stat:nth-child(2){background:#e5f5c7}.stat:nth-child(2):before{color:#4f7123}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:22px 0 16px}.toolbar input{max-width:340px}.primary-button{background:var(--lime);color:#202a1b;border:0;border-radius:10px;padding:12px 19px;font-weight:800;font-size:13px}.primary-button:hover{background:#b8e45b}.toolbar .primary-button{margin-left:auto}.table-wrap{background:#fff;border:1px solid var(--line);border-radius:16px;overflow-x:auto;box-shadow:0 8px 30px #2b342807}table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}th{text-transform:uppercase;letter-spacing:1px;font-size:10px;text-align:left;color:#899087;background:#fbfcf9;font-weight:800}td,th{padding:17px 17px;border-bottom:1px solid #eff0ec}td{max-width:260px;overflow:hidden;text-overflow:ellipsis;color:#4c534b}tr:last-child td{border-bottom:0}tbody tr:hover{background:#fafbf7}.actions{display:flex;gap:6px}.actions button{border:1px solid #e4e9dd;border-radius:8px;background:#f7f9f4;color:#3d5030;padding:8px 10px;font-size:11px;font-weight:700;white-space:nowrap}.actions button:hover{background:#e8f4d5}.status-badge{display:inline-flex;border-radius:99px;padding:6px 10px;background:#f0f2ee;color:#697267;font-weight:800;font-size:10px}.status-upcoming,.status-confirmed,.status-paid{background:#e7f6d8;color:#47702b}.status-pending,.status-refund_pending{background:#fff3d7;color:#956b23}.status-cancelled,.status-failed{background:#ffeded;color:#a64e4e}.pager{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin:17px 0;color:#747c73;font-size:12px}.notice{margin:12px 0;color:#bf4850;font-size:13px}.notice:empty{display:none}label{display:block;font-size:12px;font-weight:800;margin:15px 0 8px}input,select,textarea{width:100%;border:1px solid #e1e6dc;background:#fff;border-radius:10px;padding:12px 14px;color:#293428;outline-color:#a8d654;font-size:13px}textarea{min-height:90px;resize:vertical}.modal-backdrop{position:fixed;inset:0;background:#151b14a8;display:grid;place-items:center;padding:18px;z-index:10}.modal{width:min(100%,650px);max-height:90vh;overflow:auto;background:#fff;border:1px solid #e4e9df;padding:32px;border-radius:18px;box-shadow:0 30px 100px #0e160e55}.modal h2{font-family:Manrope,sans-serif;font-size:24px;letter-spacing:-1px;margin:0 0 20px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:23px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 15px}.form-grid .wide{grid-column:1/-1}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.detail-grid div{background:#f5f7f2;border-radius:10px;padding:13px;overflow-wrap:anywhere;font-size:13px}.detail-grid b{display:block;font-size:11px;color:#849082;margin-bottom:6px}.login-shell{min-height:100vh;display:grid;place-items:center;padding:30px;background:radial-gradient(circle at 85% 15%,#d7efad,transparent 38%),#eff2e9}.login-card{width:min(100%,470px);background:white;padding:43px;border-radius:19px;border:1px solid #e2e7d9;box-shadow:0 24px 70px #1c2e1516}.login-card:before{content:'E.';display:grid;place-items:center;width:54px;height:54px;background:var(--lime);color:#1b2b18;font-size:27px;font-weight:900;border-radius:15px}.login-card h1{font-family:Manrope,sans-serif;font-size:37px;letter-spacing:-1.7px;margin:18px 0 10px}.login-card>p:not(.eyebrow){color:#7c8679;font-size:13px}.login-card .primary-button{width:100%;margin-top:18px;padding:15px}.center{text-align:center}.muted{color:#879184}.error{color:#c23e50}.success{color:#386c32}.helper{color:#8a9288;font-size:12px}@media(max-width:1050px){.app-layout{grid-template-columns:205px minmax(0,1fr)}.sidebar{padding-left:10px;padding-right:10px}.dashboard-container{padding:25px 22px}}@media(max-width:720px){.app-layout{display:block}.sidebar{position:relative;height:auto;padding:14px}.brand{padding:0 7px 12px;font-size:20px}.sidebar-caption,.sidebar-bottom{display:none}.admin-nav{flex-direction:row;overflow-x:auto;gap:5px}.pill{white-space:nowrap;width:auto;padding:10px 12px}.nav-icon{display:none}.dashboard-container{padding:18px 14px}.admin-header{align-items:flex-start}.admin-header h1{font-size:24px}.form-grid,.detail-grid{grid-template-columns:1fr}.login-card{padding:28px}.toolbar .primary-button{margin-left:0}}
+/* Confirmed booking QR ticket */
+.qr-action{background:#d0fb70!important;color:#17210b!important;font-weight:750!important;border-color:#c1ee5c!important}
+.qr-ticket{text-align:center;padding:12px 8px 6px}.qr-ticket-head{font-size:11px;font-weight:800;letter-spacing:.12em;color:#527523}.qr-ticket h3{font-size:24px;margin:12px 0}.qr-ticket img{display:block;margin:12px auto;background:white;border:12px solid white;border-radius:16px;max-width:100%;height:auto;box-shadow:0 8px 32px #00000014}.qr-code-label{font-weight:800;letter-spacing:.07em}.qr-ticket p{color:#67736a}
+@media print{body *{visibility:hidden!important}.modal-backdrop,.modal-backdrop *{visibility:visible!important}.modal-backdrop{position:absolute!important;inset:0!important;background:white!important}.modal{box-shadow:none!important;border:0!important}.modal-actions,#printTicket{display:none!important}}
+
+
+/* Haulix-inspired midnight theme — visual changes only; API logic untouched */
+:root{color-scheme:dark;--ink:#f3f4f1;--muted:#929995;--lime:#c6f76b;--dark:#111312;--line:#303331;--bg:#111312}
+body{background:#111312;color:var(--ink)}
+.app-layout{background:#111312;grid-template-columns:92px minmax(0,1fr)}
+.sidebar{background:#181a19;border-right:1px solid #303330;padding:25px 12px 20px;align-items:stretch}
+.brand{font-size:0;justify-content:center;padding:0 0 30px;gap:0}
+.brand-icon{width:48px;height:48px;border-radius:15px;font-size:25px}
+.brand-dot{display:none}.sidebar-caption{font-size:0;padding:0;margin:0}
+.admin-nav{gap:10px}.pill{justify-content:center;min-height:52px;padding:10px 5px;font-size:0;border-radius:14px;color:#919993}
+.nav-icon{display:block;font-size:22px;width:auto}.pill:hover{background:#2b2e2b;color:#fff}
+.pill.active{background:#f4f5f2;color:#1d211d}.sidebar-bottom{padding:16px 0 0;justify-content:center}
+.sidebar-bottom>div:not(.sidebar-avatar){display:none}.sidebar-avatar{background:#30382c;color:var(--lime)}
+.dashboard-container{max-width:1800px;padding:36px clamp(20px,3.2vw,58px)}
+.admin-header{border-bottom:1px solid #2b2e2b}.admin-header h1,.section-title h2{color:#f6f7f3}
+.admin-header p,.section-title p:not(.eyebrow){color:#969e96}
+.eyebrow{color:#909b8e}.stat{background:#1e211f;border-color:#313633;color:#a2a9a1;box-shadow:none}
+.stat strong{color:#f2f5ef}.stat:nth-child(2){background:#282f23;border-color:#3b4732}
+.stat:nth-child(2) strong{color:#c6f76b}
+.table-wrap{background:#1c1f1d;border-color:#323632;box-shadow:none}
+table{color:#d8ded6}th{background:#242724;color:#9fa89e}
+td,th{border-bottom-color:#303431}td{color:#d0d6cf}
+tbody tr:hover{background:#282d28}
+.logout-button,.tiny-button{background:#252925;color:#e8eee6;border-color:#3b403b}
+.logout-button:hover,.tiny-button:hover{background:#353c32}
+.primary-button{background:var(--lime);color:#18220e}
+.primary-button:hover{background:#d8ff92}
+.actions button{background:#292e29;border-color:#3c443a;color:#e0e9da}
+.actions button:hover{background:#394332}
+.pager{color:#9ba59a}
+.status-badge{background:#333834;color:#d5ddd3}
+.status-upcoming,.status-confirmed,.status-paid{background:#30402a;color:#c6f76b}
+.status-pending,.status-refund_pending{background:#463923;color:#f8c76d}
+.status-cancelled,.status-failed{background:#482b30;color:#ffa3a3}
+input,select,textarea{background:#252925;color:#f3f6ef;border:1px solid #3b423a;outline-color:var(--lime)}
+input::placeholder,textarea::placeholder{color:#919b90}
+input:focus,select:focus,textarea:focus{border-color:var(--lime)}
+label{color:#dce4d8}
+.modal-backdrop{background:#050706c9}
+.modal{background:#1d201e;border-color:#424742;color:#f4f6f1;box-shadow:0 30px 100px #0009}
+.modal h2{color:#f4f6f1}.detail-grid div{background:#282d28;color:#e0e7dc}
+.detail-grid b{color:#a5b0a1}
+.notice,.error{color:#ff929b}.success{color:#bff185}
+a{color:var(--lime)}.muted,.helper{color:#9ca69b}
+.login-shell{background:radial-gradient(circle at 76% 15%,#34432b 0%,transparent 38%),#101210}
+.login-card{background:#1c201d;border-color:#3a4139;box-shadow:0 28px 100px #0007}
+.login-card h1{color:#f5f7f2}.login-card>p:not(.eyebrow){color:#a5afa3}
+.qr-action{background:#c6f76b!important;color:#1b2611!important;border-color:#c6f76b!important}
+.qr-ticket-head{color:#c6f76b}.qr-ticket p{color:#aeb9ac}
+.qr-ticket img{background:#fff}
+@media(min-width:1000px){.sidebar .pill{position:relative}.sidebar .pill:hover::after{content:attr(title);position:absolute;left:calc(100% + 12px);top:50%;transform:translateY(-50%);background:#323832;color:#fff;padding:9px 12px;border-radius:8px;font-size:12px;white-space:nowrap;z-index:9}}
+@media(max-width:1050px){.app-layout{grid-template-columns:76px minmax(0,1fr)}}
+@media(max-width:720px){.app-layout{display:block}.sidebar{position:relative;height:auto;padding:12px}.brand{display:none}.admin-nav{flex-direction:row;overflow-x:auto}.pill{min-width:48px;min-height:45px}.dashboard-container{padding:20px 14px}}
+@media print{.modal,.modal *{color:#111!important}.qr-ticket-head{color:#333!important}}
+
+/* Keep navigation labels visible for usability */
+@media(min-width:721px){
+.app-layout{grid-template-columns:242px minmax(0,1fr)}
+.sidebar{padding:28px 14px 20px}
+.brand{font-size:22px;justify-content:flex-start;padding:0 8px 34px;gap:10px}
+.brand-dot{display:inline}
+.sidebar-caption{font-size:10px;padding:0 13px;margin:0 0 13px}
+.pill{font-size:13px;justify-content:flex-start;padding:12px 15px;min-height:46px;gap:13px}
+.nav-icon{font-size:18px;width:22px}
+.sidebar-bottom{justify-content:flex-start;padding:16px 8px 0}
+.sidebar-bottom>div:not(.sidebar-avatar){display:block}
+}
+
+
+/* EVENTORA | Apple-inspired liquid glass on Haulix midnight palette */
+:root{--glass-fill:rgba(231,242,234,.085);--glass-edge:rgba(255,255,255,.23);--glass-shadow:0 18px 46px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.25);--glass-blur:blur(24px) saturate(165%)}
+body{background:#0b1110;color:#f4f7f4}
+.app-layout{position:relative;isolation:isolate;background:transparent}
+.app-layout:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 48% 42% at 77% 7%,rgba(129,211,164,.26),transparent 75%),radial-gradient(ellipse 40% 48% at 28% 92%,rgba(108,155,190,.23),transparent 80%),radial-gradient(ellipse 42% 34% at 78% 78%,rgba(195,161,91,.15),transparent 80%),linear-gradient(145deg,#101513,#171d1b 54%,#101713)}
+.sidebar{background:rgba(17,22,19,.57);border-right:1px solid rgba(255,255,255,.14);backdrop-filter:blur(30px) saturate(170%);-webkit-backdrop-filter:blur(30px) saturate(170%)}
+.pill{border:1px solid transparent;transition:background .2s,border-color .2s,box-shadow .2s,transform .2s}
+.pill:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.15);transform:translateX(2px)}
+.pill.active{color:#fff;background:linear-gradient(140deg,rgba(255,255,255,.27),rgba(255,255,255,.10) 60%,rgba(255,255,255,.19));border-color:rgba(255,255,255,.37);box-shadow:inset 0 1px 0 rgba(255,255,255,.36),0 6px 20px #0004}
+.pill.active .nav-icon{color:#c6f76b}
+.brand-icon{background:linear-gradient(145deg,#e4ffb0,#a8dc5b);box-shadow:inset 0 2px 2px #fff8,0 8px 24px #0006}
+.admin-header{border-color:rgba(255,255,255,.14)}
+.stat,.table-wrap,.modal,.login-card{background:linear-gradient(135deg,rgba(235,248,239,.16),rgba(199,224,210,.065) 58%,rgba(235,248,239,.11));border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);position:relative}
+.stat{border-radius:25px;overflow:hidden}
+.stat:after,.login-card:after{content:"";pointer-events:none;position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.19),transparent 34%,transparent 74%,rgba(255,255,255,.06));opacity:.65}
+.stat:nth-child(2){background:linear-gradient(135deg,rgba(194,244,108,.21),rgba(193,230,158,.08))}
+.stat strong{color:#f9fff4}
+.stat:nth-child(2) strong{color:#d6ff92}
+.table-wrap{border-radius:24px;overflow-x:auto}
+th{background:rgba(255,255,255,.09);color:#c1cfc3}
+td,th{border-bottom:1px solid rgba(255,255,255,.11)}
+td{color:#e0e8e0}
+tbody tr:hover{background:rgba(255,255,255,.075)}
+.logout-button,.tiny-button,.actions button{background:rgba(244,252,245,.11);color:#f1f8ee;border:1px solid rgba(255,255,255,.24);box-shadow:inset 0 1px 0 rgba(255,255,255,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.logout-button:hover,.tiny-button:hover,.actions button:hover{background:rgba(255,255,255,.20)}
+.primary-button,.qr-action{background:linear-gradient(145deg,#e3ffae,#bdf46a)!important;color:#1b2813!important;border:1px solid rgba(255,255,255,.6)!important;box-shadow:inset 0 1px 1px #fff9,0 8px 22px #0003}
+.primary-button:hover,.qr-action:hover{filter:brightness(1.06)}
+input,select,textarea{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.24);color:#f7fbf5;border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+input:focus,select:focus,textarea:focus{border-color:#c6f76b;box-shadow:0 0 0 3px rgba(198,247,107,.12)}
+select option{background:#202922;color:#fff}
+.modal-backdrop{background:rgba(5,8,7,.63);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.modal{border-radius:28px;background:linear-gradient(145deg,rgba(49,63,54,.94),rgba(25,34,29,.92));box-shadow:0 30px 100px #000a,inset 0 1px 0 #ffffff4d}
+.detail-grid div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:15px}
+.login-shell{background:radial-gradient(ellipse at 75% 15%,rgba(123,208,169,.34),transparent 50%),radial-gradient(ellipse at 10% 90%,rgba(119,151,206,.24),transparent 48%),#0b1110}
+.login-card{border-radius:30px;overflow:hidden}
+.login-card:before{position:relative;z-index:1}
+.login-card h1,.login-card p,.login-card form,.login-card a{position:relative;z-index:1}
+.status-badge{border:1px solid rgba(255,255,255,.10)}
+.qr-ticket img{background:#fff}
+@supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){.stat,.table-wrap,.login-card{background:#28342e}.sidebar{background:#17201a}}
+@media(max-width:720px){.sidebar{background:rgba(17,22,19,.82)}.pill:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.pill{transition:none}}
+@media print{.app-layout:before{display:none}.modal{background:#fff!important;box-shadow:none!important}}
+
+
+/* Theme chooser: Apple Music / Midnight Lime / Violet / Frosted Glass */
+:root{--theme-accent:#fa4e72;--theme-accent-ink:#fff;--theme-surface:#252527;--theme-border:#414145;--theme-canvas:#080809;--theme-side:#242427}
+html[data-theme="lime"]{--theme-accent:#c6f76b;--theme-accent-ink:#15200b;--theme-surface:#1d241f;--theme-border:#3c493d;--theme-canvas:#0b1110;--theme-side:#18201a}
+html[data-theme="violet"]{--theme-accent:#c19bff;--theme-accent-ink:#21122e;--theme-surface:#26202f;--theme-border:#51415e;--theme-canvas:#100d16;--theme-side:#201928}
+html[data-theme="glass"]{--theme-accent:#b6e8f0;--theme-accent-ink:#152529;--theme-surface:rgba(226,242,240,.12);--theme-border:rgba(255,255,255,.28);--theme-canvas:#10191b;--theme-side:rgba(19,30,31,.65)}
+body{background:var(--theme-canvas)!important;color:#f7f7f8}
+.app-layout{background:var(--theme-canvas)!important}
+.app-layout:before{display:none!important}
+.sidebar{background:var(--theme-side)!important;border-right:1px solid var(--theme-border)!important}
+.pill.active{background:var(--theme-accent)!important;color:var(--theme-accent-ink)!important;border-color:transparent!important;box-shadow:none!important}
+.pill.active .nav-icon{color:inherit!important}
+.brand-icon{background:var(--theme-accent)!important;color:var(--theme-accent-ink)!important;box-shadow:none!important}
+.brand-dot{color:var(--theme-accent)!important}
+.stat,.table-wrap,.login-card{background:var(--theme-surface)!important;border:1px solid var(--theme-border)!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.stat:nth-child(2){background:var(--theme-surface)!important;border-color:var(--theme-border)!important}
+.stat:nth-child(2) strong{color:var(--theme-accent)!important}
+th{background:rgba(255,255,255,.055)!important}
+.primary-button,.qr-action{background:var(--theme-accent)!important;color:var(--theme-accent-ink)!important;border-color:transparent!important;box-shadow:none!important}
+input:focus,select:focus,textarea:focus{border-color:var(--theme-accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--theme-accent),transparent 83%)!important}
+.sidebar-avatar{color:var(--theme-accent)!important}
+a{color:var(--theme-accent)}
+.login-shell{background:radial-gradient(circle at 80% 12%,color-mix(in srgb,var(--theme-accent),transparent 77%),transparent 45%),var(--theme-canvas)!important}
+html[data-theme="glass"] .app-layout{background:radial-gradient(ellipse at 85% 10%,#345e5b 0%,transparent 48%),radial-gradient(ellipse at 12% 85%,#45406e 0%,transparent 53%),#10191b!important}
+html[data-theme="glass"] .stat,html[data-theme="glass"] .table-wrap,html[data-theme="glass"] .login-card{backdrop-filter:blur(22px) saturate(150%)!important;-webkit-backdrop-filter:blur(22px) saturate(150%)!important;box-shadow:inset 0 1px 0 #ffffff35,0 12px 32px #0004!important}
+html[data-theme="glass"] .sidebar{backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}
+.theme-chooser{position:fixed;right:22px;bottom:22px;z-index:1100;background:rgba(38,38,41,.95);border:1px solid #ffffff3b;color:#fff;border-radius:17px;padding:10px 13px;display:flex;gap:9px;align-items:center;box-shadow:0 12px 30px #0008;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);font-size:12px}
+.theme-chooser select{background:#343439!important;color:white!important;border:1px solid #ffffff40!important;border-radius:10px;padding:8px;max-width:170px}
+.theme-chooser label{color:#e9e9ed;font-weight:700}
+@media(max-width:520px){.theme-chooser{right:10px;bottom:10px;padding:8px}.theme-chooser label{display:none}}
+@media print{.theme-chooser{display:none}}
+
+
+/* Apple Music palette + preserved Liquid Glass. Only presentation is changed. */
+:root{--theme-accent:#fa4e72;--theme-accent-ink:#fff;--theme-canvas:#080809;--theme-side:rgba(29,29,32,.69);--theme-surface:rgba(240,239,246,.095);--theme-border:rgba(255,255,255,.23)}
+html[data-theme="music"]{--theme-accent:#fa4e72;--theme-accent-ink:#fff;--theme-canvas:#080809;--theme-side:rgba(28,28,31,.7);--theme-surface:rgba(235,233,243,.09);--theme-border:rgba(255,255,255,.24)}
+html[data-theme="lime"]{--theme-side:rgba(21,29,23,.72);--theme-surface:rgba(228,249,230,.09);--theme-border:rgba(255,255,255,.21)}
+html[data-theme="violet"]{--theme-side:rgba(30,23,39,.72);--theme-surface:rgba(232,218,249,.10);--theme-border:rgba(255,255,255,.22)}
+html[data-theme="glass"]{--theme-side:rgba(19,30,31,.68);--theme-surface:rgba(226,242,240,.12);--theme-border:rgba(255,255,255,.27)}
+body{background:var(--theme-canvas)!important}
+.app-layout{background:transparent!important;isolation:isolate}
+.app-layout:before{display:block!important;position:fixed;inset:0;z-index:-1;pointer-events:none;content:"";background:radial-gradient(ellipse 47% 45% at 82% 12%,color-mix(in srgb,var(--theme-accent) 20%,transparent),transparent 77%),radial-gradient(ellipse 40% 36% at 15% 88%,rgba(106,82,135,.19),transparent 82%),linear-gradient(130deg,var(--theme-canvas),#141316 65%,var(--theme-canvas))!important}
+.sidebar{background:var(--theme-side)!important;border-right:1px solid rgba(255,255,255,.14)!important;backdrop-filter:blur(28px) saturate(160%)!important;-webkit-backdrop-filter:blur(28px) saturate(160%)!important}
+.stat,.table-wrap,.login-card,.modal{background:linear-gradient(135deg,rgba(255,255,255,.15),var(--theme-surface) 55%,rgba(255,255,255,.07))!important;border:1px solid var(--theme-border)!important;box-shadow:0 18px 46px rgba(0,0,0,.31),inset 0 1px 0 rgba(255,255,255,.23)!important;backdrop-filter:blur(24px) saturate(165%)!important;-webkit-backdrop-filter:blur(24px) saturate(165%)!important}
+.stat:nth-child(2){background:linear-gradient(140deg,color-mix(in srgb,var(--theme-accent) 14%,transparent),rgba(255,255,255,.10))!important;border-color:var(--theme-border)!important}
+.stat:nth-child(2) strong{color:var(--theme-accent)!important}
+.pill.active{background:linear-gradient(135deg,color-mix(in srgb,var(--theme-accent) 34%,rgba(255,255,255,.16)),rgba(255,255,255,.09))!important;color:#fff!important;border:1px solid rgba(255,255,255,.33)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 22px rgba(0,0,0,.25)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+.pill.active .nav-icon{color:var(--theme-accent)!important}
+.brand-icon{background:linear-gradient(140deg,color-mix(in srgb,var(--theme-accent) 80%,white),var(--theme-accent))!important;color:var(--theme-accent-ink)!important;box-shadow:inset 0 1px 0 #ffffff7a,0 10px 20px #0005!important}
+.primary-button,.qr-action{background:linear-gradient(145deg,color-mix(in srgb,var(--theme-accent) 72%,white),var(--theme-accent))!important;color:var(--theme-accent-ink)!important;border:1px solid rgba(255,255,255,.4)!important;box-shadow:inset 0 1px 0 #ffffff55,0 8px 22px #0005!important}
+.login-shell{background:radial-gradient(ellipse at 75% 15%,color-mix(in srgb,var(--theme-accent) 26%,transparent),transparent 58%),var(--theme-canvas)!important}
+.modal{background:linear-gradient(140deg,rgba(59,52,62,.94),rgba(23,22,27,.94))!important}
+.theme-chooser{background:rgba(36,35,41,.68)!important;border-color:rgba(255,255,255,.28)!important;backdrop-filter:blur(24px) saturate(170%)!important;-webkit-backdrop-filter:blur(24px) saturate(170%)!important;box-shadow:inset 0 1px 0 #ffffff3a,0 14px 32px #0007!important}
+.theme-chooser select{background:rgba(255,255,255,.13)!important}
+@media print{.app-layout:before{display:none!important}.stat,.table-wrap,.modal{backdrop-filter:none!important;box-shadow:none!important}}
+
+
+/* Eventora login polish: white glass outlines, Apple Music rose identity, spacious forms */
+html[data-theme="music"] .login-card,
+html[data-theme="music"] .login-card input,
+html[data-theme="music"] .login-card select {
+  border-color:rgba(255,255,255,.48)!important;
+}
+html[data-theme="music"] .login-card{width:min(100%,540px);padding:48px 48px 42px;border-radius:32px;box-shadow:0 24px 80px #0009,inset 0 1px 0 #ffffff4d!important}
+.login-card:before{
+  content:'E.'!important;
+  background:linear-gradient(145deg,#ff7c93 0%,#fa4e72 48%,#e72c55 100%)!important;
+  color:#fff!important;
+  width:62px;height:62px;border-radius:18px;
+  box-shadow:inset 0 1px 0 #ffffff99,0 12px 28px #0004!important;
+  margin-bottom:16px;
+}
+html[data-theme="music"] .brand-icon{background:linear-gradient(145deg,#ff7c93,#f33b64)!important;color:#fff!important}
+html[data-theme="music"] .brand-dot{color:#fa4e72!important}
+.login-card>.eyebrow{margin:0 0 18px;line-height:1.5;letter-spacing:2.8px}
+.login-card h1{margin:0 0 13px;font-size:clamp(30px,4vw,40px);line-height:1.18}
+.login-card>p:not(.eyebrow):not(.notice):not(.center){margin:0 0 28px;line-height:1.7;font-size:14px}
+.login-card form{display:flex;flex-direction:column;gap:21px}
+.login-card form label{margin:0;display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5}
+.login-card form input,.login-card form select{margin:0;min-height:52px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.10);font-size:14px;box-shadow:inset 0 1px 0 #ffffff18}
+.login-card form input:focus{border-color:#fff!important;outline:2px solid rgba(250,78,114,.6);outline-offset:2px}
+.login-card form .primary-button{margin:8px 0 0;min-height:54px;border-radius:14px;font-size:14px}
+.login-card .center{margin:22px 0 0!important;line-height:1.6;font-size:13px}
+.login-card .notice:not(:empty){margin:14px 0 0}
+@media(max-width:600px){.login-card{padding:30px 24px!important}.login-card form{gap:17px}.login-card h1{font-size:32px}}
+
+/* Eventora E. logo — Apple Music pink gradient and white lettering */
+html[data-theme="music"] .login-card::before {
+  content: "E." !important;
+  background: linear-gradient(145deg, #ff809a 0%, #fa4e72 48%, #ef315e 100%) !important;
+  color: #ffffff !important;
+  font-family: Manrope, sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.12);
+  border: 1px solid rgba(255,255,255,.45);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 24px rgba(250,78,114,.24) !important;
+}
+html[data-theme="music"] .brand-icon {
+  background: linear-gradient(145deg, #ff809a 0%, #fa4e72 48%, #ef315e 100%) !important;
+  color: white !important;
+  border: 1px solid rgba(255,255,255,.35);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 8px 20px rgba(250,78,114,.2) !important;
+}
+html[data-theme="music"] .brand-icon .brand-dot { color: white !important; }
+
+
+/* EvenTix events — ticket cards with dark Apple Music liquid glass */
+.event-card-container{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible!important}
+.event-ticket-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.event-ticket-card{min-width:0;overflow:hidden;border-radius:22px;border:1px solid rgba(255,255,255,.27);background:linear-gradient(135deg,rgba(242,237,247,.16),rgba(209,190,221,.07) 62%,rgba(240,222,239,.13));box-shadow:inset 0 1px 0 rgba(255,255,255,.29),0 12px 30px rgba(0,0,0,.2);backdrop-filter:blur(24px) saturate(165%);-webkit-backdrop-filter:blur(24px) saturate(165%);display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+.event-ticket-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.42)}
+.event-ticket-band{min-height:82px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:linear-gradient(125deg,rgba(251,106,150,.25),rgba(178,130,195,.14),rgba(255,255,255,.06));border-bottom:1px solid rgba(255,255,255,.14)}
+.event-ticket-brand{font-size:18px;font-weight:800;letter-spacing:-.6px;color:#fff}
+.event-ticket-brand-dot{color:#ff6c96}
+.event-ticket-category{font-size:11px;font-weight:700;color:#ffe3ed;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.26);border-radius:999px;padding:7px 11px;max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.event-ticket-content{padding:21px;display:flex;flex-direction:column;flex:1;min-height:228px}
+.event-ticket-title-line{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.event-ticket-title-line h3{font-size:18px;line-height:1.3;color:#fff;margin:0 0 14px;overflow-wrap:anywhere}
+.event-ticket-title-line .status-badge{font-size:10px;white-space:nowrap}
+.event-ticket-details{display:grid;gap:9px;margin-bottom:22px}
+.event-ticket-details p{margin:0;display:flex;align-items:center;gap:10px;color:#c6c8c9;font-size:13px}
+.event-ticket-details p span{color:#ff82a4;font-size:16px;width:18px;flex:none;text-align:center}
+.event-ticket-footer{margin-top:auto;padding-top:17px;border-top:1px solid rgba(255,255,255,.17);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.event-ticket-price{font-size:19px;font-weight:800;color:#fff;white-space:nowrap}
+.event-ticket-price small{font-size:11px;font-weight:500;color:#bfc3c0}
+.event-ticket-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.event-ticket-actions button{padding:10px 12px;border-radius:11px;font-size:12px}
+.event-ticket-actions .event-book-button{background:linear-gradient(135deg,#ff8cac,#fa4e72);border:1px solid #ff9fb9;color:#fff;font-weight:700}
+.event-empty{color:#c5c7c7}
+@media(max-width:1350px){.event-ticket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){.event-ticket-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.event-ticket-card{transition:none}.event-ticket-card:hover{transform:none}}
+
+/* EvenTix event tickets — graphite glass, matching Overview statistic cards */
+.event-ticket-card{
+ background:linear-gradient(145deg,rgba(65,65,68,.78) 0%,rgba(39,39,43,.82) 58%,rgba(31,31,35,.87) 100%)!important;
+ border:1px solid rgba(226,227,230,.33)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.19),0 15px 32px rgba(0,0,0,.22)!important;
+ backdrop-filter:blur(25px) saturate(125%)!important;
+ -webkit-backdrop-filter:blur(25px) saturate(125%)!important;
+}
+.event-ticket-card:hover{border-color:rgba(255,255,255,.53)!important}
+.event-ticket-band{background:linear-gradient(150deg,rgba(255,255,255,.09),rgba(255,255,255,.015))!important;border-bottom:1px solid rgba(255,255,255,.12)!important}
+.event-ticket-brand-dot{color:#f7f7f7!important}
+.event-ticket-category{background:rgba(255,255,255,.09)!important;color:#e5e6e8!important;border-color:rgba(255,255,255,.23)!important}
+.event-ticket-details p span{color:#aab0a9!important}
+.event-ticket-actions .event-book-button{background:linear-gradient(140deg,#f9f9fa,#dedfe2)!important;color:#222327!important;border-color:rgba(255,255,255,.62)!important}
+.event-ticket-actions .event-book-button:hover{filter:brightness(.92)}
+
+/* Fixed Apple Music theme: appearance selector removed everywhere */
+.theme-chooser{display:none!important}
+
+
+/* EvenTix organiser event form — aligned grid and inner scroll, fixed modal header/footer */
+.modal-backdrop{display:flex!important;align-items:center!important;justify-content:center!important;padding:clamp(12px,3vh,28px)!important;overflow:hidden!important}
+.modal{width:min(100%,760px)!important;height:min(780px,calc(100dvh - 44px))!important;max-height:calc(100dvh - 44px)!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;padding:0!important;border-radius:28px!important;isolation:isolate}
+.modal-heading{flex:none;padding:28px 34px 21px;border-bottom:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.025)}
+.modal-heading h2{margin:0!important;font-size:24px!important;line-height:1.25}
+#modalForm{min-height:0;flex:1;display:flex;flex-direction:column;overflow:hidden}
+.modal-scroll-area{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:20px 34px 26px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.4) transparent;overscroll-behavior:contain}
+.modal-scroll-area::-webkit-scrollbar{width:8px}
+.modal-scroll-area::-webkit-scrollbar-track{background:transparent}
+.modal-scroll-area::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border:2px solid transparent;background-clip:padding-box;border-radius:20px}
+.modal-footer{flex:none;display:flex;align-items:center;justify-content:flex-end;gap:16px;min-height:86px;padding:15px 34px;border-top:1px solid rgba(255,255,255,.16);background:rgba(22,20,27,.60);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.modal-footer .modal-actions{display:flex;gap:10px;flex:none;margin:0!important}
+.modal-footer .notice{flex:1;margin:0;min-width:0;overflow-wrap:anywhere;max-height:60px;overflow-y:auto}
+.modal-scroll-area .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 20px;align-items:start}
+.modal-scroll-area .form-grid>label{display:flex;flex-direction:column;gap:9px;min-width:0;margin:0!important;line-height:1.3}
+.modal-scroll-area .form-grid>label.wide{grid-column:1/-1}
+.modal-scroll-area .form-grid input,.modal-scroll-area .form-grid select,.modal-scroll-area .form-grid textarea{display:block;min-width:0;width:100%;margin:0!important;min-height:47px;padding:12px 14px;border-radius:13px}
+.modal-scroll-area .form-grid textarea{min-height:110px;resize:vertical}
+.modal-scroll-area .form-grid input[type="datetime-local"]{color-scheme:dark}
+@media(max-width:640px){.modal{height:min(740px,calc(100dvh - 20px))!important;max-height:calc(100dvh - 20px)!important;border-radius:20px!important}.modal-heading{padding:20px 20px 16px}.modal-scroll-area{padding:18px 20px 22px}.modal-footer{padding:12px 20px;min-height:75px}.modal-scroll-area .form-grid{grid-template-columns:1fr;gap:16px}.modal-scroll-area .form-grid>label.wide{grid-column:auto}}
+
+/* EvenTix sidebar logo: identical square and lettering to login E. */
+html[data-theme="music"] .sidebar .brand-icon {
+  width: 70px !important; height: 70px !important; min-width: 70px !important;
+  flex: 0 0 70px !important; display: inline-flex !important;
+  align-items: center !important; justify-content: center !important;
+  flex-wrap: nowrap !important; white-space: nowrap !important;
+  padding: 0 !important; line-height: 1 !important;
+  border-radius: 19px !important; font-family: Manrope,sans-serif !important;
+  font-size: 30px !important; font-weight: 900 !important; letter-spacing: -1px !important;
+  background: linear-gradient(145deg,#ff809a 0%,#fa4e72 48%,#ef315e 100%) !important;
+  border: 1px solid rgba(255,255,255,.45) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45),0 8px 24px rgba(250,78,114,.24) !important;
+}
+html[data-theme="music"] .sidebar .brand-icon .brand-dot {
+  display: inline !important; position: static !important;
+  color: #fff !important; font: inherit !important; line-height: 1 !important;
+}
+html[data-theme="music"] .sidebar .brand {align-items: center !important; gap: 12px !important;}
+@media(max-width:720px){html[data-theme="music"] .sidebar .brand{display:flex !important}}

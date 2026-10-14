@@ -1,0 +1,10 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/categories
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImVtYWlsIjoiY3VzdG9tZXIxQGV4YW1wbGUuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzkxNDc4MTE2LCJleHAiOjE3OTE0ODE3MTZ9.eoWoRlKB_XAiYlu_sXTlYyaZE81ARgHpEaNjW5VwX3I
+order: 1000

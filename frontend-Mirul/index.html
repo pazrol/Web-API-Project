@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sign in - Event Ticketing</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="msg" hidden></div>
+
+    <form class="login" id="f">
+      <h2>Event Ticketing</h2>
+
+      <!-- Switch between the two modes of this single page -->
+      <div class="bar">
+        <button type="button" id="tabLogin" onclick="setMode('login')">Sign in</button>
+        <button type="button" id="tabReg" class="sec" onclick="setMode('register')">Register</button>
+      </div>
+
+      <div id="regOnly" hidden>
+        <label>Full name</label>
+        <input id="fullname" type="text" />
+      </div>
+
+      <label>Email</label>
+      <input id="email" type="email" required autofocus />
+
+      <label>Password</label>
+      <input id="pw" type="password" required />
+      <p class="mut" id="pwHint" hidden>At least 8 characters.</p>
+
+      <div id="regRole" hidden>
+        <label>Account type</label>
+        <select id="role" onchange="keyBox.hidden = role.value !== 'admin'">
+          <option value="customer">Customer</option>
+          <option value="organiser">Organiser</option>
+          <option value="admin">Admin</option>
+        </select>
+        <div id="keyBox" hidden>
+          <label>Admin reference key</label>
+          <input id="refkey" type="password" />
+        </div>
+      </div>
+
+      <button id="go">Sign in</button>
+    </form>
+
+    <script src="js/config.js"></script>
+    <script>
+      if (localStorage.token) location = 'app.html';
+      let mode = 'login';
+
+      const msg = (t, ok) => {
+        const m = document.getElementById('msg');
+        m.textContent = t;
+        m.className = ok ? 'ok' : 'err';
+        m.hidden = false;
+        setTimeout(() => (m.hidden = true), 5000);
+      };
+
+      // Show or hide the extra register fields
+      function setMode(m) {
+        mode = m;
+        const reg = m === 'register';
+        regOnly.hidden = regRole.hidden = pwHint.hidden = !reg;
+        keyBox.hidden = !reg || role.value !== 'admin';
+        tabLogin.className = reg ? 'sec' : '';
+        tabReg.className = reg ? '' : 'sec';
+        go.textContent = reg ? 'Create account' : 'Sign in';
+        fullname.required = reg;
+      }
+
+      // Read role/name from the JWT payload if the login response has no user object
+      const jwt = (t) => {
+        try {
+          return JSON.parse(atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+        } catch (x) {
+          return {};
+        }
+      };
+
+      async function login(emailValue, password) {
+        const j = await api('/auth/login', 'POST', { email: emailValue, password });
+        const d = j.data || j;
+        const t = d.token || d.access_token || d.jwt;
+        const p = jwt(t);
+        const u = d.user || p.data || p;
+        if (!t || !u.role) throw new Error('Unexpected login response');
+        localStorage.token = t;
+        localStorage.user = JSON.stringify(u);
+        location = 'app.html';
+      }
+
+      f.onsubmit = async (ev) => {
+        ev.preventDefault();
+        try {
+          const em = email.value.trim();
+          if (mode === 'register') {
+            const body = { name: fullname.value.trim(), email: em, password: pw.value, role: role.value };
+            if (role.value === 'admin') body.reference_key = refkey.value;
+            await api('/auth/register', 'POST', body);
+            msg('Account created. Signing you in...', true);
+          }
+          await login(em, pw.value);
+        } catch (x) {
+          msg(x.message);
+        }
+      };
+    </script>
+  </body>
+</html>

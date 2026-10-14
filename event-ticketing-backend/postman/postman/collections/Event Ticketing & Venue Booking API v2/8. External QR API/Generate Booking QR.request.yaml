@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/bookings/1/qr
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+  X-API-Key: "{{api_key}}"
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImVtYWlsIjoiY3VzdG9tZXIxQGV4YW1wbGUuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzkxNDg0Mzg4LCJleHAiOjE3OTE0ODc5ODh9.nElMl-mUWi0u5PhlI18_nSbU4SXH7AbUWuvunqzjjc4
+order: 1000

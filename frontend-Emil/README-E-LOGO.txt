@@ -1,0 +1,1 @@
+Eventora logo remains E. in white on an Apple Music pink gradient. Login card, form spacing, and liquid glass stay unchanged. Extract frontend-emil into C:\xampp\htdocs\Web-API-Project\ and hard refresh (Ctrl+F5).

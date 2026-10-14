@@ -1,0 +1,14 @@
+$kind: collection
+description: Postman collection for the shared 8-table event ticketing backend. Import, set {{base_url}}, {{token}} and {{api_key}}.
+variables:
+  base_url: http://localhost/event-ticketing-backend/api
+  token: ""
+  api_key: CHANGE_THIS_API_KEY
+  user_id: "1"
+  venue_id: "1"
+  availability_id: "1"
+  category_id: "1"
+  event_id: "1"
+  booking_id: "1"
+  payment_id: "1"
+  notification_id: "1"

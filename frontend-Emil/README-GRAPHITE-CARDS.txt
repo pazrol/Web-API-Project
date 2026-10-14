@@ -1,0 +1,1 @@
+Events & Tickets cards now match the charcoal/graphite glass look of the Overview statistic card. Layout, liquid glass, API calls, booking and QR code unchanged. Install by extracting into C:\xampp\htdocs\Web-API-Project\ then Ctrl+F5.

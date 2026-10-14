@@ -1,0 +1,5 @@
+<?php $pageKey='events'; $pageTitle='Events'; $allowedRoles='admin,organiser,customer'; $pageScript='events.js'; require __DIR__ . '/../includes/header.php'; ?>
+<div class="toolbar"><div class="toolbar-start"><div class="search-box"><span class="search-symbol">⌕</span><input id="event-search" class="toolbar-input" type="search" placeholder="Search events by name…" aria-label="Search events"></div><button class="btn btn-muted" id="event-search-button" type="button">Search</button><button class="btn btn-muted" id="event-clear-button" type="button">Clear</button></div><div class="toolbar-end" id="events-toolbar-actions"></div></div>
+<div id="events-list"><div class="loading-state"><span class="spinner"></span>Loading events…</div></div>
+<div class="pager-row"><span id="events-count" class="small-note"></span><div class="toolbar-end"><button class="btn btn-muted btn-small" type="button" id="events-prev" disabled>← Previous</button><button class="btn btn-muted btn-small" type="button" id="events-next" disabled>Next →</button></div></div>
+<?php require __DIR__ . '/../includes/footer.php'; ?>

@@ -1,0 +1,1 @@
+Theme selector added to all pages. Default: Apple Music Black & Rose. Other options: Midnight Lime, Midnight Purple, Liquid Glass Blue. Choice saved in browser localStorage. Backend and database unchanged. Extract frontend-emil folder into C:\xampp\htdocs\Web-API-Project\; Ctrl+F5.

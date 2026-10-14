@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TixNation - Login or Sign Up</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/extra.css" />
+</head>
+<body>
+  <div id="bg-fx"></div>
+
+  <div class="corner-logo">
+    <span class="logo-dot" aria-label="TixNation ticket logo"><svg class="logo-ticket-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5V9a3 3 0 0 0 0 6v3.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5V15a3 3 0 0 0 0-6V5.5Z" fill="white"/><path d="M14.5 7.5v2M14.5 11v2M14.5 14.5v2" stroke="#4779f5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+    <span class="logo-text">TIXNATION</span>
+  </div>
+
+  <div class="auth-wrap">
+    <div class="auth-card auth-card-wide">
+      <p class="eyebrow">Your events, all in one place</p>
+      <div class="auth-tabs" role="tablist" aria-label="Account access">
+        <button type="button" class="auth-tab active" id="show-login" role="tab" aria-selected="true">Log in</button>
+        <button type="button" class="auth-tab" id="show-signup" role="tab" aria-selected="false">Sign up</button>
+      </div>
+
+      <section id="login-panel">
+        <h1>Welcome back</h1>
+        <p class="auth-intro">Log in to continue to your TixNation dashboard.</p>
+        <form id="login-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="username" />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password" />
+
+          <button type="submit" class="btn btn-full" id="login-btn">Log in</button>
+        </form>
+        <div class="error-msg" id="login-error" role="alert"></div>
+      </section>
+
+      <section id="signup-panel" hidden>
+        <h1>Create your account</h1>
+        <p class="auth-intro">Join TixNation to explore events and manage bookings.</p>
+        <form id="signup-form">
+          <label for="signup-name">Full name</label>
+          <input type="text" id="signup-name" name="name" maxlength="100" required autocomplete="name" />
+
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" name="email" required autocomplete="email" />
+
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" name="password" minlength="8" required autocomplete="new-password" />
+          <p class="auth-hint">Use at least 8 characters.</p>
+
+          <label for="signup-role">Account type</label>
+          <select id="signup-role" name="role" required>
+            <option value="customer">Customer</option>
+            <option value="organiser">Organiser</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <div id="reference-key-wrap" hidden>
+            <label for="signup-reference-key">Authorisation reference key</label>
+            <input type="password" id="signup-reference-key" name="reference_key" autocomplete="off" />
+            <p class="auth-hint">Required for privileged roles if configured by the backend. The backend must validate this key.</p>
+          </div>
+
+          <button type="submit" class="btn btn-full" id="signup-btn">Create account</button>
+        </form>
+        <div class="error-msg" id="signup-error" role="alert"></div>
+        <div class="auth-success" id="signup-success" role="status" hidden></div>
+      </section>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    redirectIfLoggedIn();
+
+    const loginPanel = document.getElementById("login-panel");
+    const signupPanel = document.getElementById("signup-panel");
+    const loginTab = document.getElementById("show-login");
+    const signupTab = document.getElementById("show-signup");
+    const roleSelect = document.getElementById("signup-role");
+    const referenceWrap = document.getElementById("reference-key-wrap");
+    const referenceInput = document.getElementById("signup-reference-key");
+
+    function switchAuthPanel(panel) {
+      const showSignup = panel === "signup";
+      loginPanel.hidden = showSignup;
+      signupPanel.hidden = !showSignup;
+      loginTab.classList.toggle("active", !showSignup);
+      signupTab.classList.toggle("active", showSignup);
+      loginTab.setAttribute("aria-selected", String(!showSignup));
+      signupTab.setAttribute("aria-selected", String(showSignup));
+    }
+
+    loginTab.addEventListener("click", () => switchAuthPanel("login"));
+    signupTab.addEventListener("click", () => switchAuthPanel("signup"));
+
+    function updateReferenceKeyVisibility() {
+      const needsKey = roleSelect.value === "organiser" || roleSelect.value === "admin";
+      referenceWrap.hidden = !needsKey;
+      referenceInput.required = needsKey;
+      if (!needsKey) referenceInput.value = "";
+    }
+
+    roleSelect.addEventListener("change", updateReferenceKeyVisibility);
+    updateReferenceKeyVisibility();
+
+    function showAuthError(id, message) {
+      const box = document.getElementById(id);
+      box.textContent = message;
+      box.style.display = "block";
+    }
+
+    function hideAuthMessage(id) {
+      const box = document.getElementById(id);
+      box.textContent = "";
+      box.style.display = "none";
+    }
+
+    function getErrorMessage(result, fallback) {
+      if (result.errors) {
+        const firstKey = Object.keys(result.errors)[0];
+        if (firstKey) {
+          const value = result.errors[firstKey];
+          return Array.isArray(value) ? value[0] : String(value);
+        }
+      }
+      return result.message || fallback;
+    }
+
+    document.getElementById("login-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      hideAuthMessage("login-error");
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const button = document.getElementById("login-btn");
+      button.disabled = true;
+      button.textContent = "Logging in...";
+
+      try {
+        const result = await login(email, password);
+        if (result.ok) {
+          window.location.href = "dashboard.html";
+          return;
+        }
+        showAuthError("login-error", getErrorMessage(result, "Login failed."));
+      } catch (error) {
+        showAuthError("login-error", error.message || "Login failed.");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Log in";
+      }
+    });
+
+    document.getElementById("signup-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      hideAuthMessage("signup-error");
+      document.getElementById("signup-success").hidden = true;
+
+      const button = document.getElementById("signup-btn");
+      const payload = {
+        name: document.getElementById("signup-name").value.trim(),
+        email: document.getElementById("signup-email").value.trim(),
+        password: document.getElementById("signup-password").value,
+        role: roleSelect.value,
+        reference_key: referenceInput.value
+      };
+
+      if (payload.password.length < 8) {
+        showAuthError("signup-error", "Password must be at least 8 characters.");
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Creating account...";
+
+      try {
+        // Registration uses the existing POST /auth/register endpoint.
+        const result = await apiPost("/auth/register", payload, { auth: false });
+
+        if (!result.ok) {
+          showAuthError("signup-error", getErrorMessage(result, "Registration failed."));
+          return;
+        }
+
+        const success = document.getElementById("signup-success");
+        success.textContent = "Account created successfully. Please log in with your new email and password.";
+        success.hidden = false;
+
+        document.getElementById("email").value = payload.email;
+        document.getElementById("password").value = "";
+        document.getElementById("signup-form").reset();
+        roleSelect.value = "customer";
+        updateReferenceKeyVisibility();
+        switchAuthPanel("login");
+      } catch (error) {
+        showAuthError("signup-error", error.message || "Registration failed.");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Create account";
+      }
+    });
+  </script>
+</body>
+</html>

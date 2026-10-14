@@ -1,0 +1,21 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/availability
+method: POST
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "venue_id": 1,
+      "availability_date": "2026-10-22",
+      "start_time": "09:00:00",
+      "end_time": "17:00:00",
+      "status": "available"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTE0NzkzNDEsImV4cCI6MTc5MTQ4Mjk0MX0.k09RZPP145LKOlmcNGmOjxnTLH0YNWaRNUg0Bbx7KXU
+order: 4000

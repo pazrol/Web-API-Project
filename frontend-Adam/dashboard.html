@@ -1,0 +1,384 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event Ticketing & Venue Booking - Dashboard</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/extra.css" />
+
+  <style>
+    /* Dot Grid Wave background setup */
+    html {
+      min-height: 100%;
+      background: #101042;
+    }
+
+    body {
+      position: relative;
+      isolation: isolate;
+      min-height: 100vh;
+      background: transparent;
+    }
+
+    /* Full-screen animated background */
+    #bg-fx {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background: linear-gradient(
+        135deg,
+        #101042 0%,
+        #171b48 35%,
+        #202b60 65%,
+        #101042 100%
+      );
+    }
+
+    /* Dot Grid Wave animation */
+    #bg-fx [data-aifx="dot-grid-wave"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .topnav {
+      position: relative;
+      z-index: 1000;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .fullpage {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+    }
+
+    #toast-stack {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 4000;
+    }
+
+    /* Keep the animated background visible */
+    .app-shell,
+    .dash-section {
+      background-color: transparent;
+    }
+
+    /* Translucent surfaces */
+    .sidebar-card,
+    .modal,
+    .agenda-list,
+    #section-bookings .booking-card,
+    #section-payments .payment-card {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Respect reduced-motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      #bg-fx {
+        background: #101042;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============== Animated Dot Grid Wave background ============== -->
+  <div id="bg-fx" aria-hidden="true">
+    <div
+      data-aifx="dot-grid-wave"
+      data-aifx-spacing="0.2"
+      data-aifx-wave-scale="0.63"
+      data-aifx-wave-speed="0.71"
+      data-aifx-angle="72"
+      data-aifx-falloff="1"
+      class="absolute inset-0 -z-10 pointer-events-none"
+      aria-hidden="true"
+    ></div>
+  </div>
+
+  <!-- Toast messages -->
+  <div id="toast-stack"></div>
+
+  <!-- ============== Top navigation ============== -->
+  <nav class="topnav">
+    <div class="topnav-left">
+      <span class="logo-dot" aria-label="TixNation ticket logo"><svg class="logo-ticket-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5V9a3 3 0 0 0 0 6v3.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5V15a3 3 0 0 0 0-6V5.5Z" fill="white"/><path d="M14.5 7.5v2M14.5 11v2M14.5 14.5v2" stroke="#4779f5" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      <span class="logo-text">TIXNATION</span>
+    </div>
+
+    <div class="navlinks" id="navlinks">
+      <!-- Filled in by app.js based on role -->
+    </div>
+
+    <div class="topnav-right">
+      <div class="notif-wrap">
+        <button
+          class="icon-btn"
+          id="notif-bell"
+          title="Notifications"
+        >&#128276;</button>
+
+        <span
+          class="notif-badge"
+          id="notif-badge"
+          style="display:none;"
+        ></span>
+
+        <div class="notif-dropdown" id="notif-dropdown">
+          <div class="notif-head">
+            <h3>Notifications</h3>
+          </div>
+
+          <div id="notif-list"></div>
+
+          <div class="notif-compose" id="notif-compose-wrap">
+            <button type="button" id="notif-compose-link">
+              Send a notification
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <span class="topnav-name" id="topnav-name"></span>
+      <span class="role-badge" id="role-badge"></span>
+
+      <button class="btn secondary small" id="logout-btn">
+        Log out
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============== Main content ============== -->
+  <div class="app-shell">
+
+    <!-- Overview landing page -->
+    <section class="dash-section" id="section-overview">
+      <div class="overview-hero">
+        <div><span class="overview-eyebrow">TIXNATION DASHBOARD</span>
+          <h1 id="overview-greeting">Welcome to TixNation</h1>
+          <p id="overview-description">Manage your events, bookings and venue activities from one place.</p>
+        </div><div class="overview-hero-icon" aria-hidden="true">✦</div>
+      </div>
+      <div class="overview-stats">
+        <article class="overview-stat-card"><span class="overview-stat-icon" aria-label="Events calendar">▦</span><div><p>Events</p><h2 id="overview-events-count">—</h2></div></article>
+        <article class="overview-stat-card"><span class="overview-stat-icon" aria-label="Venue building">⌂</span><div><p>Venues</p><h2 id="overview-venues-count">—</h2></div></article>
+        <article class="overview-stat-card"><span class="overview-stat-icon" aria-label="Booking ticket">▤</span><div><p>Bookings</p><h2 id="overview-bookings-count">—</h2></div></article>
+        <article class="overview-stat-card"><span class="overview-stat-icon" aria-label="Payments wallet">▱</span><div><p>Payments</p><h2 id="overview-payments-count">—</h2></div></article>
+      </div>
+      <div class="overview-main-grid">
+        <div class="overview-panel"><div class="overview-panel-heading"><div><h2>Quick actions</h2><p>Go straight to the tools you need.</p></div></div><div id="overview-quick-actions" class="overview-actions"></div></div>
+        <div class="overview-panel"><div class="overview-panel-heading"><div><h2>Getting started</h2><p>Useful steps for your account.</p></div></div><div id="overview-getting-started" class="overview-checklist"></div></div>
+      </div>
+      <div class="overview-panel overview-recent-panel"><div class="overview-panel-heading"><div><h2>Recent events</h2><p>Take a look at events in TixNation.</p></div><button class="btn secondary small" type="button" onclick="showSection('events')">View events</button></div><div id="overview-recent-events" class="overview-recent-events"><p>Loading events...</p></div></div>
+    </section>
+
+    <!-- Events -->
+    <section class="dash-section" id="section-events">
+      <div class="page-head">
+        <h2>Events</h2>
+      </div>
+
+      <div class="toolbar" id="events-toolbar"></div>
+      <div class="daybar" id="events-daybar"></div>
+
+      <div class="layout-2col">
+        <div>
+          <div class="agenda-list" id="events-list"></div>
+          <div id="events-pagination"></div>
+        </div>
+
+        <div class="sidebar-card" id="my-bookings-card">
+          <div class="sidebar-head">
+            <h3>My bookings</h3>
+            <span class="sidebar-count" id="my-bookings-count"></span>
+          </div>
+
+          <div id="my-bookings-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Venues -->
+    <section class="dash-section" id="section-venues">
+      <div class="page-head">
+        <h2>Venues</h2>
+
+        <button
+          class="btn"
+          id="venue-add-btn"
+          style="display:none;"
+        >+ Add venue</button>
+      </div>
+
+      <div class="toolbar" id="venues-toolbar"></div>
+      <div id="venues-list"></div>
+      <div id="venues-pagination"></div>
+    </section>
+
+    <!-- Venue availability -->
+    <section class="dash-section" id="section-availability">
+      <div class="page-head">
+        <h2>Venue availability</h2>
+        <button class="btn" id="availability-add-btn">
+          + Add slot
+        </button>
+      </div>
+
+      <div class="toolbar" id="availability-toolbar"></div>
+      <div id="availability-list"></div>
+      <div id="availability-pagination"></div>
+    </section>
+
+    <!-- Categories -->
+    <section class="dash-section" id="section-categories">
+      <div class="page-head">
+        <h2>Categories</h2>
+        <button class="btn" id="category-add-btn">
+          + Add category
+        </button>
+      </div>
+
+      <div id="categories-list"></div>
+    </section>
+
+    <!-- Bookings -->
+    <section class="dash-section" id="section-bookings">
+      <div class="page-head">
+        <h2 id="bookings-title">Bookings</h2>
+      </div>
+
+      <div class="toolbar" id="bookings-toolbar"></div>
+      <div id="bookings-list"></div>
+      <div id="bookings-pagination"></div>
+    </section>
+
+    <!-- Payments -->
+    <section class="dash-section" id="section-payments">
+      <div class="page-head">
+        <h2>Payments</h2>
+      </div>
+
+      <div class="toolbar" id="payments-toolbar"></div>
+      <div id="payments-list"></div>
+      <div id="payments-pagination"></div>
+    </section>
+
+    <!-- Notifications page for organisers and admins -->
+    <section class="dash-section" id="section-notifications">
+      <div class="page-head">
+        <div><h2>Notifications</h2><p class="page-subtitle">Updates and reminders related to your event activity.</p></div>
+        <div class="notification-page-actions">
+          <button class="btn secondary" id="notification-announcement-btn" type="button">Send announcement</button>
+          <button class="btn" id="notification-send-btn" type="button">+ Send notification</button>
+        </div>
+      </div>
+      <div class="notification-inbox-panel">
+        <div class="notification-inbox-heading"><div><h3>Your inbox</h3><p>Notifications available to your account.</p></div><span class="notification-total" id="notification-total">0 Total</span></div>
+        <div id="notifications-page-list"><div class="loading-text">Loading notifications...</div></div>
+      </div>
+      <div class="notification-compose-panel" id="notification-compose-panel" hidden>
+        <div class="notification-inbox-heading"><div><h3>Send notification</h3><p>Send a message to a customer or announce an update.</p></div><button class="btn secondary small" id="notification-compose-cancel" type="button">Cancel</button></div>
+        <div id="notification-compose-form"></div>
+      </div>
+    </section>
+
+    <!-- Users -->
+    <section class="dash-section" id="section-users">
+      <div class="page-head">
+        <h2>Users</h2>
+        <button class="btn" id="user-add-btn">
+          + Add user
+        </button>
+      </div>
+
+      <div class="toolbar" id="users-toolbar"></div>
+      <div id="users-list"></div>
+      <div id="users-pagination"></div>
+    </section>
+
+  </div>
+
+  <!-- ============== Shared modal ============== -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <!-- ============== Compose notification page ============== -->
+  <div class="fullpage" id="fullpage-compose">
+    <div class="fullpage-inner">
+      <button class="fullpage-back" id="fullpage-back">
+        &larr; Back
+      </button>
+
+      <h1>Send a notification</h1>
+      <p class="sub">
+        Pick a customer, or send to everyone at once.
+      </p>
+
+      <div id="compose-form-wrap"></div>
+    </div>
+  </div>
+
+  <!-- ============== Existing application scripts ============== -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/venues.js"></script>
+  <script src="js/availability.js"></script>
+  <script src="js/categories.js"></script>
+  <script src="js/bookings.js"></script>
+  <script src="js/payments.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/users.js"></script>
+  <script src="js/overview.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- AIDesigner effect runtime: load only once
+  <script
+    src="https://cdn.aidesigner.ai/effects/runtime/v1.js"
+    defer
+  ></script> -->
+
+  <!-- Remove attribution links if they exist in the normal DOM -->
+  <script>
+    (function () {
+      function removeAIDesignerBadge() {
+        document
+          .querySelectorAll('a[href*="aidesigner.ai"]')
+          .forEach(function (link) {
+            if (
+              link.textContent.includes('Made in AIDesigner') ||
+              link.href.includes('effect-badge')
+            ) {
+              link.remove();
+            }
+          });
+      }
+
+      removeAIDesignerBadge();
+
+      const observer = new MutationObserver(removeAIDesignerBadge);
+
+      observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+    })();
+  </script>
+</body>
+</html>

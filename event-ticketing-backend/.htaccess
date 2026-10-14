@@ -1,0 +1,10 @@
+Options -Indexes
+RewriteEngine On
+RewriteBase /Web-API-Project/event-ticketing-backend/
+
+# Send API requests to index.php.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api(?:/.*)?$ index.php [QSA,L]
+
+# Never expose sensitive application folders directly.
+RedirectMatch 403 ^/Web-API-Project/event-ticketing-backend/(config|database|storage|postman)(/|$)

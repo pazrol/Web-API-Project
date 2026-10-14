@@ -1,0 +1,19 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/users/7
+method: PUT
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Test Customer Updated",
+      "email": "testcustomer@example.com",
+      "role": "customer"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTE0NzkzNDEsImV4cCI6MTc5MTQ4Mjk0MX0.k09RZPP145LKOlmcNGmOjxnTLH0YNWaRNUg0Bbx7KXU
+order: 4000

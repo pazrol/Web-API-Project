@@ -1,0 +1,25 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/events
+method: POST
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "New Demo Event",
+      "description": "Event created from Postman",
+      "category_id": 4,
+      "venue_id": 3,
+      "start_datetime": "2026-10-23 10:00:00",
+       "end_datetime": "2026-10-23 13:00:00",
+      "ticket_price": 25,
+      "total_tickets": 100,
+      "organiser_id" : 2
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTE0NzgwOTMsImV4cCI6MTc5MTQ4MTY5M30.0jyBLdoNZbhpBhzbrFEy5MWFjQAkG8QtCYdvH7qaBSY
+order: 4000

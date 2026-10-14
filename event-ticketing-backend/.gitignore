@@ -1,0 +1,10 @@
+
+# Exclude private backend configuration
+/config/config.php
+
+# Exclude environment files
+/.env
+/.env.*
+
+# Exclude backend logs
+/*.log

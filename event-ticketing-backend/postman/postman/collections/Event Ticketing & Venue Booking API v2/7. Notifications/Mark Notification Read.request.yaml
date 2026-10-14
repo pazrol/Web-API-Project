@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/notifications/9/read
+method: PUT
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImVtYWlsIjoiY3VzdG9tZXIxQGV4YW1wbGUuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzkxNDgzNjk0LCJleHAiOjE3OTE0ODcyOTR9.6Z9xDJ-zRaemoOXcHTAruBqG3KPhM2n3NiR20Xc5FQE
+order: 4000

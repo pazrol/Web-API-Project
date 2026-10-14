@@ -1,0 +1,21 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/notifications
+method: POST
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "recipient_id": 4,
+      "event_id": 2,
+      "title": "Event Reminder",
+      "message": "Technology Talk Session will be held on 21 October 2026 from 10:00 AM to 1:00 PM.",
+      "notification_type": "event_reminder"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImVtYWlsIjoib3JnYW5pc2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJvcmdhbmlzZXIiLCJpYXQiOjE3OTE0ODM2MjAsImV4cCI6MTc5MTQ4NzIyMH0.GUcaWO8wFDLkgHlKkFvA7QW0ctRmtMDJvVXqZQoGM4s
+order: 2000

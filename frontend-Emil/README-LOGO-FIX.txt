@@ -1,0 +1,1 @@
+Fixes the sidebar E. logo on Administrator, Organiser and Customer dashboards. Matches login logo pink gradient, white E. lettering, rounded corners and glass border; prevents dot wrapping below the icon. No backend or JS changes. Extract frontend-emil into C:\xampp\htdocs\Web-API-Project\ and Ctrl+F5.

@@ -1,0 +1,10 @@
+$kind: http-request
+url: http://localhost/event-ticketing-backend/api/bookings
+method: GET
+headers:
+  Authorization: Bearer {{token}}
+auth:
+  type: bearer
+  credentials:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImVtYWlsIjoiY3VzdG9tZXIxQGV4YW1wbGUuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzkxNDgyMDU0LCJleHAiOjE3OTE0ODU2NTR9.kO9v2wJGdjqYFhcuHQuPn_6DopNmXO7YCkkWnPEPgRI
+order: 1000
